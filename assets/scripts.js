@@ -10,81 +10,79 @@ if (!window["Heartlove"]) {
       messages: [" ❤️Nguyễn Lâm Thuỳ Trinh", "Chúc Thuỳ Trinh Valentine Vui Vẻ", "12/07/2001"],
       images: [],
       heartColor: "#ff9090",
+      music: "./Music/thuytrinh.mp3",
     },
   };
 }
 (function () {
-  const e = new URLSearchParams(window["location"]["search"])["get"]("data");
-  if (e) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const encodedData = urlParams.get("data");
+
+  // 1. Load dữ liệu từ URL nếu có, nếu không giữ nguyên mặc định
+  if (encodedData) {
     try {
-      const o = decodeURIComponent(escape(atob(e)));
-      const a = JSON["parse"](o);
-      window["Heartlove"] = {
-        data: {
-          messages: a.messages || [],
-          images: a["images"] || [],
-          heartColor: a["heartColor"] || "#ff9090",
-          music: a["music"] || null,
-        },
+      const decoded = decodeURIComponent(escape(atob(encodedData)));
+      const parsed = JSON.parse(decoded);
+      window.Heartlove.data = {
+        messages: parsed.messages || window.Heartlove.data.messages,
+        images: parsed.images || window.Heartlove.data.images,
+        heartColor: parsed.heartColor || window.Heartlove.data.heartColor,
+        music: parsed.music || window.Heartlove.data.music,
       };
-      console.log("Heartlove data đã được load:", window.Heartlove);
-      if (window["Heartlove"]["data"]["music"]) {
-        const e = new Audio(window["Heartlove"]["data"]["music"]);
-        e.loop = true;
-        const o = document["createElement"]("button");
-        o.id = "musicToggle";
-        o["innerHTML"] = '<i class="fas fa-volume-high"></i>';
-        document["body"]["appendChild"](o);
-        let a = false;
-        const s = () => {
-          o["innerHTML"] =
-            '<i class="fas ' + a
-              ? "fa-volume-high"
-              : "fa-volume-xmark" + '"></i>';
-        };
-        const r = () => {
-          e["play"]()
-            ["then"](() => {
-              a = true;
-              s();
-            })
-            ["catch"](() => {
-              console.log("Tự động phát bị chặn.");
-            });
-        };
-        const n = () => {
-          e["pause"]();
-          a = false;
-          s();
-        };
-        o["addEventListener"]("click", () => {
-          if (a) {
-            n();
-          } else {
-            r();
-          }
-        });
-        e["play"]()
-          ["then"](() => {
-            a = true;
-            s();
-          })
-          ["catch"](() => {
-            const o = () => {
-              r();
-              document["removeEventListener"]("click", o);
-            };
-            document.addEventListener("click", o);
-          });
-      }
-    } catch (e) {
-      console["error"]("Dữ liệu không hợp lệ:", e);
-      window["Heartlove"] = null;
+    } catch (err) {
+      console.error("Dữ liệu URL không hợp lệ:", err);
     }
-  } else {
-    console["warn"](
-      "Không tìm thấy dữ liệu trong link. Sử dụng dữ liệu mặc định."
-    );
+  }
+
+  // 2. Logic phát nhạc
+  const musicPath = window.Heartlove.data.music;
+  if (musicPath) {
+    const audio = new Audio(musicPath);
+    audio.loop = true;
+
+    // Tạo nút bấm
+    const btn = document.createElement("button");
+    btn.id = "musicToggle";
+    btn.innerHTML = '<i class="fas fa-volume-xmark"></i>'; // Mặc định là tắt
+    document.body.appendChild(btn);
+
+    let isPlaying = false;
+
+    // Hàm cập nhật giao diện nút
+    const updateIcon = () => {
+      btn.innerHTML = '<i class="fas ' + (isPlaying ? "fa-volume-high" : "fa-volume-xmark") + '"></i>';
+    };
+
+    const playMusic = () => {
+      audio.play()
+        .then(() => {
+          isPlaying = true;
+          updateIcon();
+        })
+        .catch(() => console.log("Chờ tương tác để phát nhạc..."));
+    };
+
+    const pauseMusic = () => {
+      audio.pause();
+      isPlaying = false;
+      updateIcon();
+    };
+
+    // Sự kiện click nút
+    btn.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      if (isPlaying) pauseMusic(); else playMusic();
+    });
+
+    // Thử tự động phát
+    playMusic();
+
+    // Nếu tự động phát bị chặn, sẽ phát ngay khi người dùng bấm bất cứ đâu
+    const autoPlayOnce = () => {
+      if (!isPlaying) playMusic();
+      document.removeEventListener("click", autoPlayOnce);
+    };
+    document.addEventListener("click", autoPlayOnce);
   }
 })();
 const appData = window["Heartlove"]["data"];
@@ -2599,7 +2597,7 @@ img["onload"] = () => {
   //   zIndex: 9999,
   //   pointerEvents: "auto",
   // });
-  document.body["appendChild"](e);
+  //document.body["appendChild"](e);
 };
 fadeObjects["push"](streamHeart, shootingStars);
 [streamHeart, shootingStars]["forEach"]((t) => {
