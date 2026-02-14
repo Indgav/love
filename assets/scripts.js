@@ -7,7 +7,7 @@ import { makeMat } from "./mins.js";
 if (!window["Heartlove"]) {
   window.Heartlove = {
     data: {
-      messages: ["Anh yêu em", "mãi yêu em", "Thật sự yêu em rất nhiều đó"],
+      messages: [" ❤️Nguyễn Lâm Thuỳ Trinh", "Chúc Thuỳ Trinh Valentine Vui Vẻ", "12/07/2001"],
       images: [],
       heartColor: "#ff9090",
     },
@@ -2550,55 +2550,55 @@ img["onload"] = () => {
   img.style.maxWidth = "100%";
   img["style"]["height"] = "auto";
 };
-img["onerror"] = () => {
+  img["onerror"] = () => {
   console["warn"](" ");
-  const e = document.createElement("canvas");
-  const o = e["getContext"]("2d");
-  function a() {
-    e["width"] = window["innerWidth"];
-    e["height"] = window.innerHeight;
-    (function () {
-      o["clearRect"](0, 0, e["width"], e["height"]);
-      o["fillStyle"] = "rgba(20, 20, 20, 0.97)";
-      o["fillRect"](0, 0, e["width"], e["height"]);
-      o["fillStyle"] = "#ffffff";
-      o["font"] = "bold 48px Arial, sans-serif";
-      o["textAlign"] = "center";
-      o["textBaseline"] = "middle";
-      const s = "Hệ thống đang cập nhật";
-      const r = 0.8 * e["width"];
-      const i = e["height"] / 2 - 30;
-      !(function (e, o, a, s, r, n) {
-        const c = o["split"](" ");
-        let l = "";
-        const x = [];
-        for (let t = 0; t < c["length"]; t++) {
-          const o = l + c[t] + " ";
-          if (e.measureText(o)["width"] > r && t > 0) {
-            x["push"](l["trim"]());
-            l = c[t] + " ";
-          } else {
-            l = o;
-          }
-        }
-        x.push(l.trim());
-        x.forEach((t, o) => {
-          e["fillText"](t, a, s + o * n);
-        });
-      })(o, s, e["width"] / 2, i, r, 60);
-    })();
-  }
-  window["addEventListener"]("resize", a);
-  a();
-  Object.assign(e.style, {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    zIndex: 9999,
-    pointerEvents: "auto",
-  });
+  // const e = document.createElement("canvas");
+  // const o = e["getContext"]("2d");
+  // function a() {
+  //   e["width"] = window["innerWidth"];
+  //   e["height"] = window.innerHeight;
+  //   (function () {
+  //     o["clearRect"](0, 0, e["width"], e["height"]);
+  //     o["fillStyle"] = "rgba(20, 20, 20, 0.97)";
+  //     o["fillRect"](0, 0, e["width"], e["height"]);
+  //     o["fillStyle"] = "#ffffff";
+  //     o["font"] = "bold 48px Arial, sans-serif";
+  //     o["textAlign"] = "center";
+  //     o["textBaseline"] = "middle";
+  //     const s = "Hệ thống đang cập nhật";
+  //     const r = 0.8 * e["width"];
+  //     const i = e["height"] / 2 - 30;
+  //     !(function (e, o, a, s, r, n) {
+  //       const c = o["split"](" ");
+  //       let l = "";
+  //       const x = [];
+  //       for (let t = 0; t < c["length"]; t++) {
+  //         const o = l + c[t] + " ";
+  //         if (e.measureText(o)["width"] > r && t > 0) {
+  //           x["push"](l["trim"]());
+  //           l = c[t] + " ";
+  //         } else {
+  //           l = o;
+  //         }
+  //       }
+  //       x.push(l.trim());
+  //       x.forEach((t, o) => {
+  //         e["fillText"](t, a, s + o * n);
+  //       });
+  //     })(o, s, e["width"] / 2, i, r, 60);
+  //   })();
+  // }
+  // window["addEventListener"]("resize", a);
+  // a();
+  // Object.assign(e.style, {
+  //   position: "fixed",
+  //   top: 0,
+  //   left: 0,
+  //   width: "100vw",
+  //   height: "100vh",
+  //   zIndex: 9999,
+  //   pointerEvents: "auto",
+  // });
   document.body["appendChild"](e);
 };
 fadeObjects["push"](streamHeart, shootingStars);
